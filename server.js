@@ -15,7 +15,7 @@ const db = require("./models");
 
 const server = express();
 
-// ✅ CORS settings
+// CORS settings
 const corsSettings = {
   origin: "*", // fixed key name: "origin" (not "originL")
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -23,12 +23,12 @@ const corsSettings = {
   credentials: true
 };
 
-// ✅ Apply middleware
+// Apply middleware
 server.use(cors(corsSettings));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
-// ✅ Create HTTP server & attach Socket.IO
+// Create HTTP server & attach Socket.IO
 const httpServer = http.createServer(server);
 const io = new Server(httpServer, {
   cors: {
@@ -37,27 +37,27 @@ const io = new Server(httpServer, {
   }
 });
 
-// ✅ Make Socket.IO available to controllers
+// Make Socket.IO available to controllers
 server.set("io", io);
 
-// ✅ Socket event listeners
+// Socket event listeners
 io.on("connection", (socket) => {
-  console.log(`✅ Socket connected: ${socket.id}`);
+  console.log(`Socket connected: ${socket.id}`);
 
   socket.on("disconnect", () => {
-    console.log(`❌ Socket disconnected: ${socket.id}`);
+    console.log(`Socket disconnected: ${socket.id}`);
   });
 });
 
-// ✅ Import routes
+// Import routes
 const api = require("./routes/index");
 server.use("/", api);
 
-// ✅ Sequelize sync
+// Sequelize sync
 db.databaseConf.sync();
 
-// ✅ Start server
+// Start server
 const PORT = process.env.PORT || 8080;
 httpServer.listen(PORT, () => {
-  console.log(`🚀 Server running on port: ${PORT}`);
+  console.log(`Server running on port: ${PORT}`);
 });

@@ -23,22 +23,18 @@ const db = {};
 db.Sequelize = Sequelize;
 db.databaseConf = database;
 
-// function to drop existing tables and re-sync database
 db.dropRestApiTable = () => {
     db.databaseConf.sync({ force: true }).then(() => {
-        // You may want to update this log message to include all tables managed by Sequelize
         console.log("Database tables just dropped and db re-synced.");
     });
 };
 
-// 📌 1. Import and initialize the existing Post/Tutorial model
-// Renamed 'Sequelize.model' to 'Post.model' for clarity, assuming it defines the Post/Tutorial.
 db.posts = require("./Post.model")(database, Sequelize); 
 
-// 📌 2. ADD THE NEW EMPLOYEE MODEL HERE
-// Assumes you created a file named 'Employee.model.js' in the same directory.
 db.employees = require("./Employee.model")(database, Sequelize);
 
 db.users = require("./User.model")(database, Sequelize);
+
+db.categories = require("./Categories.model")(database, Sequelize);
 
 module.exports = db;

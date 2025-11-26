@@ -6,7 +6,6 @@
  * Matches database fields: id, user_id, name, email, role, is_active, date_joined
  **/
 module.exports = (database, Sequelize) => {
-    // 📌 The model name is explicitly set to "employees" to match your table name.
     return database.define("employees", {
         user_id: {
             type: Sequelize.STRING, 

@@ -8,7 +8,7 @@
 
 const post = require("../controllers/Post");
 const employee = require("../controllers/Employee"); // Import the Employee controller
-const categories = require("../controllers/Categories");
+const product_types = require("../controllers/Product_Types");
 const auth = require("../controllers/Auth");
 const express = require("express");
 const router = express.Router();
@@ -46,22 +46,22 @@ router.put(
 // FOR CATEGORIES
 router.get(
     "/api/categories/all",
-    categories.getAll
+    product_types.getAll
 )
 
 router.get(
     "/api/categories/category-by-id/:id",
-    categories.getById
+    product_types.getById
 )
 
 router.post(
     "/api/categories/add-category",
-    categories.create
+    product_types.create
 )
 
 router.put(
     "/api/categories/update-category/:id",
-    categories.update
+    product_types.update
 )
 
 

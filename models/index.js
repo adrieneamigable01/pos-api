@@ -35,6 +35,6 @@ db.employees = require("./Employee.model")(database, Sequelize);
 
 db.users = require("./User.model")(database, Sequelize);
 
-db.categories = require("./Categories.model")(database, Sequelize);
+db.product_types = require("./Product_Types.model")(database, Sequelize);
 
 module.exports = db;

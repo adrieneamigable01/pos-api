@@ -1,76 +1,88 @@
 const db = require("../models");
-const categoriesObj = db.product_types;
+const Product = db.products;
 
 // =============================
-// CREATE CATEGORY
+// CREATE PRODUCT
 // =============================
 exports.create = async (req, res) => {
-    const { type_name, description } = req.body;
+    const {
+        product_name,
+        type_id,
+        supplier_id,
+        barcode,
+        uom_id,
+        price
+    } = req.body;
 
-    if (!type_name) {
+    if (!product_name || !barcode || !price) {
         return res.status(400).send({
-            message: "Category name is required.",
+            message: "Product name, barcode and price are required.",
             isError: true
         });
     }
 
     try {
-        const newCategory = await categoriesObj.create({
-            type_name,
-            description,
+        const newProduct = await Product.create({
+            product_name,
+            type_id,
+            supplier_id,
+            barcode,
+            uom_id,
+            price,
             created_at: new Date()
         });
 
         return res.status(201).send({
-            message: "Category created successfully!",
-            data: newCategory,
+            message: "Product created successfully!",
+            data: newProduct,
             isError: false
         });
 
     } catch (error) {
         return res.status(500).send({
-            message: error.message || "Error creating category",
+            message: error.message || "Error creating product",
             isError: true
         });
     }
 };
 
 // =============================
-// GET ALL CATEGORIES
+// GET ALL PRODUCTS
 // =============================
 exports.getAll = async (req, res) => {
     try {
-        const data = await categoriesObj.findAll({
-            order: [["type_id", "ASC"]]
+        const data = await Product.findAll({
+            order: [["product_id", "ASC"]]
         });
 
         return res.status(200).send({
             data,
             isError: false,
-            message: "Success fetching categories"
+            message: "Success fetching products"
         });
+
     } catch (error) {
         return res.status(500).send({
-            message: error.message || "Error retrieving categories",
+            message: error.message || "Error retrieving products",
             isError: true
         });
     }
 };
 
 // =============================
-// GET CATEGORY BY ID
+// GET PRODUCT BY ID
 // =============================
 exports.getById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const data = await categoriesObj.findOne({
-            where: { type_id: id }
+        const data = await Product.findOne({
+            where: { product_id: id }
         });
 
         if (!data) {
             return res.status(404).send({
-                message: "Category not found",
+                message: "Product not found",
                 isError: true
             });
         }
@@ -82,103 +94,88 @@ exports.getById = async (req, res) => {
 
     } catch (error) {
         return res.status(500).send({
-            message: error.message || "Error retrieving category",
+            message: error.message || "Error retrieving product",
             isError: true
         });
     }
 };
 
 // =============================
-// UPDATE CATEGORY
+// UPDATE PRODUCT
 // =============================
 exports.update = async (req, res) => {
     const { id } = req.params;
-    const { type_name, description } = req.body;
+    const {
+        product_name,
+        type_id,
+        supplier_id,
+        barcode,
+        uom_id,
+        price
+    } = req.body;
 
     try {
-        const [updated] = await categoriesObj.update(
-            { type_name, description },
-            { where: { type_id: id } }
+        const [updated] = await Product.update(
+            {
+                product_name,
+                type_id,
+                supplier_id,
+                barcode,
+                uom_id,
+                price
+            },
+            { where: { product_id: id } }
         );
 
         if (updated === 0) {
             return res.status(404).send({
-                message: "Category not found",
+                message: "Product not found",
                 isError: true
             });
         }
 
         return res.status(200).send({
-            message: "Category updated successfully",
+            message: "Product updated successfully",
             isError: false
         });
 
     } catch (error) {
         return res.status(500).send({
-            message: error.message || "Error updating category",
+            message: error.message || "Error updating product",
             isError: true
         });
     }
 };
 
 // =============================
-// DELETE CATEGORY
+// DELETE PRODUCT
 // =============================
 exports.delete = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const deleted = await categoriesObj.destroy({
-            where: { type_id: id }
+        const deleted = await Product.destroy({
+            where: { product_id: id }
         });
 
         if (!deleted) {
             return res.status(404).send({
-                message: "Category not found",
+                message: "Product not found",
                 isError: true
             });
         }
 
         return res.status(200).send({
-            message: "Category deleted successfully",
+            message: "Product deleted successfully",
             isError: false
         });
 
     } catch (error) {
         return res.status(500).send({
-            message: error.message || "Error deleting category",
+            message: error.message || "Error deleting product",
             isError: true
         });
     }
 };
 
-
-exports.deleteById = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const deleted = await categoriesObj.destroy({
-            where: { type_id: id }
-        });
-
-        if (!deleted) {
-            return res.status(404).send({
-                message: "Category not found",
-                isError: true
-            });
-        }
-
-        return res.status(200).send({
-            message: "Category deleted successfully",
-            isError: false
-        });
-
-    } catch (error) {
-        return res.status(500).send({
-            message: error.message || "Error deleting category",
-            isError: true
-        });
-    }
-};
-
-
+exports.deleteById = exports.delete;

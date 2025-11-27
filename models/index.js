@@ -37,4 +37,6 @@ db.users = require("./User.model")(database, Sequelize);
 
 db.product_types = require("./Product_Types.model")(database, Sequelize);
 
+db.products = require("./Products.model")(database, Sequelize);
+
 module.exports = db;

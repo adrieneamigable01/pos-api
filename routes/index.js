@@ -8,7 +8,10 @@
 
 const post = require("../controllers/Post");
 const employee = require("../controllers/Employee"); // Import the Employee controller
+
 const product_types = require("../controllers/Product_Types");
+const products = require("../controllers/Products");
+
 const auth = require("../controllers/Auth");
 const express = require("express");
 const router = express.Router();
@@ -63,6 +66,34 @@ router.put(
     "/api/categories/update-category/:id",
     product_types.update
 )
+
+
+// FOR PRODUCTS
+router.get(
+    "/api/products/all",
+    products.getAll
+);
+
+router.get(
+    "/api/products/product-by-id/:id",
+    products.getById
+);
+
+router.post(
+    "/api/products/add-product",
+    products.create
+);
+
+router.put(
+    "/api/products/update-product/:id",
+    products.update
+);
+
+router.delete(
+    "/api/products/delete-product/:id",
+    products.delete
+);
+
 
 
 

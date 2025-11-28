@@ -11,6 +11,7 @@ const employee = require("../controllers/Employee"); // Import the Employee cont
 
 const product_types = require("../controllers/Product_Types");
 const products = require("../controllers/Products");
+const suppliers = require("../controllers/Suppliers");
 
 const auth = require("../controllers/Auth");
 const express = require("express");
@@ -67,6 +68,11 @@ router.put(
     product_types.update
 )
 
+router.delete(
+    "/api/categories/delete-category/:id",
+    product_types.delete
+)
+
 
 // FOR PRODUCTS
 router.get(
@@ -94,6 +100,32 @@ router.delete(
     products.delete
 );
 
+
+// FOR SUPPLIERS
+router.get(
+    "/api/suppliers/all",
+    suppliers.getAll
+);
+
+router.get(
+    "/api/suppliers/supplier-by-id/:id",
+    suppliers.getById
+);
+
+router.post(
+    "/api/suppliers/add-supplier",
+    suppliers.create
+);
+
+router.put(
+    "/api/suppliers/update-supplier/:id",
+    suppliers.update
+);
+
+router.delete(
+    "/api/suppliers/delete-supplier/:id",
+    suppliers.deleteById
+);
 
 
 

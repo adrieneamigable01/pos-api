@@ -179,3 +179,40 @@ exports.delete = async (req, res) => {
 };
 
 exports.deleteById = exports.delete;
+
+
+// =============================
+// GET PRODUCTS with JOIN (type + supplier)
+// =============================
+exports.getAllWithDetails = async (req, res) => {
+    try {
+        const data = await Product.findAll({
+            include: [
+                {
+                    model: db.product_types,
+                    as: "type",
+                    attributes: ["type_name"] // select what fields you want
+                },
+                {
+                    model: db.suppliers,
+                    as: "supplier",
+                    attributes: ["supplier_name", "phone"]
+                }
+            ],
+            order: [["product_id", "ASC"]]
+        });
+
+        return res.status(200).send({
+            data,
+            isError: false,
+            message: "Products with details fetched successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).send({
+            message: error.message || "Error retrieving products",
+            isError: true
+        });
+    }
+};
+

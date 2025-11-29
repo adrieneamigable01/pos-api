@@ -41,4 +41,14 @@ db.products = require("./Products.model")(database, Sequelize);
 
 db.suppliers = require("./Suppliers.model")(database, Sequelize);
 
+db.products.belongsTo(db.product_types, {
+    foreignKey: "type_id",
+    as: "type"
+})
+
+db.products.belongsTo(db.suppliers, {
+    foreignKey: "supplier_id",
+    as: "supplier"
+})
+
 module.exports = db;

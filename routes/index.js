@@ -100,6 +100,12 @@ router.delete(
     products.delete
 );
 
+router.get(
+    "/api/products/details", 
+    products.getAllWithDetails
+);
+
+
 
 // FOR SUPPLIERS
 router.get(

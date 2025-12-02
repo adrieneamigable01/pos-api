@@ -1,23 +1,22 @@
 module.exports = (database, Sequelize) => {
-    // Defines the model and table name as 'users'
     return database.define("users", {
         user_id: {
             type: Sequelize.STRING,
             allowNull: false,
-            primaryKey: true, // Set user_id as the primary key
+            primaryKey: true,
             unique: true
         },
         username: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true // Ensures no two users share the same username
+            unique: true 
         },
         password: {
             type: Sequelize.STRING,
             allowNull: false
         },
         user_type: {
-            type: Sequelize.STRING, // e.g., 'Admin', 'Staff', 'Manager'
+            type: Sequelize.STRING, 
             allowNull: false
         },
         created_at: {
@@ -25,9 +24,7 @@ module.exports = (database, Sequelize) => {
             defaultValue: Sequelize.NOW
         }
     }, {
-        // Disable Sequelize's default 'createdAt' and 'updatedAt' 
-        // since your table uses 'created_at' and does not use 'updatedAt'.
         timestamps: false,
-        tableName: 'users' // Explicitly set the table name
+        tableName: 'users'
     });
 };

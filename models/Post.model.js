@@ -8,19 +8,17 @@
  * Time: 00:01
  **/
 module.exports = (database, Sequelize) => {
-    // Defines the table/model name as 'post'. 
-    // Sequelize will look for or create a database table named 'posts'.
     return database.define("post", {
         title: {
             type: Sequelize.STRING,
-            allowNull: false // Title should be mandatory
+            allowNull: false 
         },
         description: {
             type: Sequelize.TEXT
         },
         published: {
             type: Sequelize.BOOLEAN,
-            defaultValue: false // Sets the default state to unpublished
+            defaultValue: false 
         },
         publisher: {
             type: Sequelize.STRING
